@@ -1,0 +1,27 @@
+{
+  "name": "egg-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "egg-bin dev",
+    "lint": "eslint --fix . || true"
+  },
+  "author": "huahaitao",
+  "license": "ISC",
+  "dependencies": {
+    "egg": "^2.4.1",
+    "egg-mongoose": "^3.0.0",
+    "egg-redis": "^2.0.0",
+    "egg-view-ejs": "^2.0.0",
+    "moment": "^2.21.0",
+    "uuid": "^3.2.1",
+    "xmlbuilder": "^10.0.0"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.3.7",
+    "egg-mock": "^3.15.0",
+    "eslint": "^5.0.0",
+    "eslint-config-egg": "^7.0.0"
+  }
+}

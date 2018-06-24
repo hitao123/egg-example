@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <!-- meta -->
+  <meta charset="utf-8"/>
+  <meta name='description' content='<%= config.description %>'>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="keywords" content="<%= config.keywords %>"/>
+  <!-- see http://smerity.com/articles/2013/where_did_all_the_http_referrers_go.html -->
+  <meta name="referrer" content="always">
+
+  <!-- <%
+  var headers = config.site_headers || [];
+  for (var i = 0, l = headers.length; i < l; i++) {
+  %>
+  <%- headers[i] %>
+  <% } %> -->
+
+  <link title="RSS" type="application/rss+xml" rel="alternate" href="/rss"/>
+
+  <!-- <% if (config.site_icon) { %>
+  <link rel="icon" href="<%- helper.staticFile(config.site_icon) %>" type="image/x-icon"/>
+  <% } %> -->
+
+
+  <!-- <% if (typeof topic !== 'undefined') { %>
+  <title><%= topic.title %> - <%= config.name %></title>
+  <% } else if (typeof pageTitle !== 'undefined') { %>
+  <title><%= pageTitle %> - <%= config.name %></title>
+  <% } else { %>
+  <title><%= config.description %></title>
+  <% } %> -->
+  <meta content="_csrf" name="csrf-param">
+</head>
+<body>
+
+<div id='main'>
+  <%- body %>
+</div>
+<div id='backtotop'>回到顶部</div>
+<div id='footer'>
+  <div id='footer_main'>
+    <div class="links">
+      <a class='dark' href='/rss'>RSS</a>
+      |
+      <a class='dark' href='https://github.com/cnodejs/egg-cnode/'>源码地址</a>
+    </div>
+  </div>
+</div>
+<div id="sidebar-mask"></div>
+
+<% if (config.google_tracker_id) { %>
+<script>
+  // google analytics
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script', "<%- proxy('https://www.google-analytics.com/analytics.js') %>",'ga');
+
+  ga('create', '<%-config.google_tracker_id%>', 'auto');
+  ga('send', 'pageview');
+</script>
+<% } %>
+
+<% if (config.cnzz_tracker_id) { %>
+<div style="display:none;">
+  <script src="//s95.cnzz.com/z_stat.php?id=<%- config.cnzz_tracker_id %>&web_id=<%- config.cnzz_tracker_id %>" language="JavaScript"></script>
+</div>
+<% } %>
+
+</body>
+</html>
