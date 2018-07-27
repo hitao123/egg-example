@@ -33,12 +33,12 @@ module.exports = appInfo => {
   config.view = {
     defaultViewEngine: 'ejs',
     mapping: {
-      '.html': 'ejs',
+      '.ejs': 'ejs',
     },
   };
   //
   config.ejs = {
-    layout: 'layout.html',
+    layout: 'layout.ejs',
   };
   // database cache
   config.redis = {
