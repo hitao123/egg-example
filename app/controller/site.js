@@ -15,7 +15,7 @@ class HomeController extends Controller {
     // 取主题
     const query = {};
     if (!tab || tab === 'all') {
-      // mongodb 查询数据方式
+      // mongodb 查询数据方式 https://docs.mongodb.com/manual/reference/operator/query/nin/
       query.tab = {
         $nin: [
           'job',

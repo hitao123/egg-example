@@ -1,11 +1,11 @@
 'use strict';
 
-const uuid = require('uuid');
+// const uuid = require('uuid');
 
 module.exports = app => {
-  // if (app.config.debug) {
-  //   app.config.coreMiddleware.unshift('less');
-  // }
+  if (app.config.debug) {
+    app.config.coreMiddleware.unshift('less');
+  }
 
   // const localHandler = async (ctx, { username, password }) => {
   //   const getUser = username => {

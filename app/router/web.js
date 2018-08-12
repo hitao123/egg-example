@@ -18,23 +18,24 @@ module.exports = app => {
   // mobile app download
   router.get('/app/download', site.appDownload);
 
-  // // sign controller
-  // if (config.allow_sign_up) {
-  //   // 跳转到注册页面
-  //   router.get('/signup', sign.showSignup);
-  //   // 提交注册信息
-  //   router.post('/signup', createUserLimit, sign.signup);
-  // } else {
-  //   // 进行github验证
-  //   router.redirect('/signup', '/passport/github');
-  // }
+  // sign controller
+  // app.logger.error(config.allow_sign_up, '===>');
+  if (config.allow_sign_up) {
+    // 跳转到注册页面
+    router.get('/signup', sign.showSignup);
+    // 提交注册信息
+    router.post('/signup', createUserLimit, sign.signup);
+  } else {
+    // 进行github验证
+    router.redirect('/signup', '/passport/github');
+  }
 
   // const localStrategy = app.passport.authenticate('local', {
   //   successRedirect: '/',
   //   failureRedirect: '/signin',
   // });
 
-  // router.get('/signin', sign.showLogin); // 进入登录页面
+  router.get('/signin', sign.showLogin); // 进入登录页面
   // router.post('/passport/local', localStrategy);
   // router.all('/signout', sign.signout); // 登出
   // router.get('/active_account', sign.activeAccount); // 帐号激活
@@ -42,7 +43,7 @@ module.exports = app => {
   // // github oauth
   // app.passport.mount('github');
 
-  // router.get('/search_pass', sign.showSearchPass); // 找回密码页面
+  router.get('/search_pass', sign.showSearchPass); // 找回密码页面
   // router.post('/search_pass', sign.updateSearchPass); // 更新密码
   // router.get('/reset_pass', sign.resetPass); // 进入重置密码页面
   // router.post('/reset_pass', sign.updatePass); // 更新密码
