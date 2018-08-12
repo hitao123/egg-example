@@ -12,8 +12,79 @@ class HomeController extends Controller {
     page = page > 0 ? page : 1;
     const tab = this.ctx.query.tab || 'all';
 
+    // 取主题
+    const query = {};
+    if (!tab || tab === 'all') {
+      // mongodb 查询数据方式
+      query.tab = {
+        $nin: [
+          'job',
+          'dev',
+        ],
+      };
+    } else {
+      if (tab === 'good') {
+        query.good = true;
+      } else {
+        query.tab = tab;
+      }
+    }
+    if (!query.good) {
+      query.create_at = {
+        $gte: moment()
+          .subtract(1, 'years')
+          .toDate(),
+      };
+    }
+
     const limit = this.config.list_topic_count;
+    const options = {
+      skip: (page - 1) * limit,
+      limit,
+      sort: '-top -last_reply_at',
+    };
+
+    const topics = await this.service.topic.getTopicsByQuery(query, options);
     const tabName = this.ctx.helper.tabName(tab);
+    let tops = await this.service.cache.get('tops');
+    if (!tops) {
+      tops = await this.service.user.getUsersByQuery(
+        { is_block: false },
+        { limit: 10, sort: '-score' }
+      );
+      await this.service.cache.setex('tops', tops, 60);
+    }
+
+    // 取0回复的主题
+    let no_reply_topics = await this.service.cache.get('no_reply_topics');
+    if (!no_reply_topics) {
+      no_reply_topics = await this.service.topic.getTopicsByQuery(
+        {
+          reply_count: 0,
+          tab: {
+            $nin: [
+              'job',
+              'dev',
+            ],
+          },
+        },
+        { limit: 5, sort: '-create_at' }
+      );
+      await this.service.cache.setex(
+        'no_reply_topics',
+        no_reply_topics,
+        60 * 1
+      );
+    }
+
+    // 取分页数据
+    const pagesCacheKey = JSON.stringify(query) + 'pages';
+    let pages = await this.service.cache.get(pagesCacheKey);
+    if (!pages) {
+      const all_topics_count = await this.service.topic.getCountByQuery(query);
+      pages = Math.ceil(all_topics_count / limit);
+      await this.service.cache.setex(pagesCacheKey, pages, 60 * 1);
+    }
 
     const locals = {
       topics,
@@ -27,7 +98,7 @@ class HomeController extends Controller {
       pageTitle: tabName && tabName + '版块',
     };
 
-    await this.ctx.render('index', locals);
+    await this.ctx.render('index.html', locals);
   }
 
   async sitemap() {

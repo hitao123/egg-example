@@ -4,6 +4,11 @@ module.exports = appInfo => {
   const config = {};
 
   config.keys = appInfo.name + '_1519887194138_3450';
+  // add your config here 这里不做配置， ejs 模板获取不到值
+  config.middleware = [ 'locals' ];
+  // cdn host，如 http://cnodejs.qiniudn.com
+  config.site_static_host = process.env.EGG_SITE_STATIC_HOST || ''; // 静态文件存储域名
+  config.mini_assets = process.env.EGG_MINI_ASSETS || false;
 
   config.name = 'CNode技术社区';
 
@@ -29,17 +34,17 @@ module.exports = appInfo => {
     pageSize: 10,
   };
 
-  // 渲染引擎
   config.view = {
     defaultViewEngine: 'ejs',
     mapping: {
-      '.ejs': 'ejs',
+      '.html': 'ejs',
     },
   };
-  //
+
   config.ejs = {
-    layout: 'layout.ejs',
+    layout: 'layout.html',
   };
+
   // database cache
   config.redis = {
     client: {

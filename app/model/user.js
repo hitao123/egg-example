@@ -46,9 +46,9 @@ module.exports = app => {
 
     accessToken: { type: String },
   });
-
+  // http://mongoosejs.com/docs/api.html#schema_Schema-index 创建索引
   UserSchema.index({ loginname: 1 }, { unique: true }); // 主键
-  UserSchema.index({ email: 1 }, { unique: true });
+  UserSchema.index({ email: 1 }, { unique: true }); // 主键
   UserSchema.index({ score: -1 });
   UserSchema.index({ githubId: 1 });
   UserSchema.index({ accessToken: 1 });
