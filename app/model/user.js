@@ -7,6 +7,7 @@ module.exports = app => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;
 
+  // 这里是不是就创建了 collection
   const UserSchema = new Schema({
     name: { type: String },
     loginname: { type: String }, // 登录名

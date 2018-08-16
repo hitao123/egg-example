@@ -111,22 +111,41 @@ class UserService extends Service {
     const query = { loginname, retrieve_key: key };
     return this.ctx.model.User.findOne(query).exec();
   }
+  /**
+   * 更新分数和回复条数
+   * @param {*} id
+   * @param {*} score
+   * @param {*} replyCount
+   */
 
   incrementScoreAndReplyCount(id, score, replyCount) {
     const query = { _id: id };
     const update = { $inc: { score, reply_count: replyCount } };
     return this.ctx.model.User.findByIdAndUpdate(query, update).exec();
   }
+  /**
+   * 增加主题收藏数量
+   * @param {*} id
+   */
 
   incrementCollectTopicCount(id) {
     const query = { _id: id };
     const update = { $inc: { collect_topic_count: 1 } };
     return this.ctx.model.User.findByIdAndUpdate(query, update).exec();
   }
+  /**
+   * 保存 user 数据到数据库中
+   * @param {*} name
+   * @param {*} loginname
+   * @param {*} pass
+   * @param {*} email
+   * @param {*} avatar_url
+   * @param {*} active
+   */
 
   newAndSave(name, loginname, pass, email, avatar_url, active) {
     const user = new this.ctx.model.User();
-    user.name = loginname;
+    user.name = name;
     user.loginname = loginname;
     user.pass = pass;
     user.email = email;

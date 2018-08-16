@@ -6,9 +6,9 @@ module.exports = app => {
   const { site, sign, user, topic, rss,
     search, page, reply, message } = controller;
 
-  // const userRequired = middleware.userRequired();
-  // const adminRequired = middleware.adminRequired();
-  // const createTopicLimit = middleware.createTopicLimit(config.topic);
+  const userRequired = middleware.userRequired();
+  const adminRequired = middleware.adminRequired();
+  const createTopicLimit = middleware.createTopicLimit(config.topic);
   const createUserLimit = middleware.createUserLimit(config.create_user_per_ip);
 
   // home page
@@ -27,13 +27,13 @@ module.exports = app => {
     router.post('/signup', createUserLimit, sign.signup);
   } else {
     // 进行github验证
-    router.redirect('/signup', '/passport/github');
+    // router.redirect('/signup', '/passport/github');
   }
 
-  // const localStrategy = app.passport.authenticate('local', {
-  //   successRedirect: '/',
-  //   failureRedirect: '/signin',
-  // });
+  const localStrategy = app.passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/signin',
+  });
 
   router.get('/signin', sign.showLogin); // 进入登录页面
   // router.post('/passport/local', localStrategy);
@@ -48,7 +48,7 @@ module.exports = app => {
   // router.get('/reset_pass', sign.resetPass); // 进入重置密码页面
   // router.post('/reset_pass', sign.updatePass); // 更新密码
 
-  // // user controller
+  // user controller
   // router.get('/user/:name', user.index); // 用户个人主页
   // router.get('/setting', userRequired, user.showSetting); // 用户个人设置页
   // router.post('/setting', userRequired, user.setting); // 提交个人信息设置

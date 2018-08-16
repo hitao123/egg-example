@@ -65,11 +65,32 @@ module.exports = appInfo => {
   };
   // database
   config.mongoose = {
-    url: process.env.EGG_MONGODB_URL || 'mongodb://127.0.0.1:27017/egg_cnode',
+    url: process.env.EGG_MONGODB_URL || 'mongodb://127.0.0.1:27017/egg_example',
     options: {
       server: { poolSize: 20 },
     },
   };
+
+  // passport
+  config.passportGithub = {
+    key: process.env.EGG_PASSPORT_GITHUB_CLIENT_ID || 'test',
+    secret: process.env.EGG_PASSPORT_GITHUB_CLIENT_SECRET || 'test',
+  };
+
+  config.passportLocal = {
+    usernameField: 'name',
+    passwordField: 'pass',
+  };
+
+  config.topic = {
+    perDayPerUserLimitCount: 10,
+  };
+
+  config.list_topic_count = 20;
+
+  // 每个 IP 每天可创建用户数
+  config.create_user_per_ip = 1000;
+
   // 邮箱配置
   config.mail_opts = {
     host: 'smtp.126.com',

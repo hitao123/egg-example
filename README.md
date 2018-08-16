@@ -2,6 +2,8 @@
 
 ## 后端结构分析
 
+> user topic 表是最重要的，reply topic_collect message 都是以前两张表相关的，每张表都有一个主键如 `"_id" : ObjectId("5b0ab2b091a9e80aa9177318")`
+
 ### topic 表
 
   | field | type | default | detail |

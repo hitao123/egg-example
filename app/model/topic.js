@@ -8,7 +8,7 @@ module.exports = app => {
   const TopicSchema = new Schema({
     title: { type: String },
     content: { type: String },
-    author_id: { type: ObjectId },
+    author_id: { type: ObjectId }, // user _id 类似 "_id" : ObjectId("5b0ab2b091a9e80aa9177318") user表 外键
     top: { type: Boolean, default: false }, // 置顶帖
     good: { type: Boolean, default: false }, // 精华帖
     lock: { type: Boolean, default: false }, // 被锁定主题

@@ -8,9 +8,9 @@ module.exports = app => {
   const MessageSchema = new Schema({
     type: { type: String },
     master_id: { type: ObjectId },
-    author_id: { type: ObjectId },
-    topic_id: { type: ObjectId },
-    reply_id: { type: ObjectId },
+    author_id: { type: ObjectId }, // 外键 user
+    topic_id: { type: ObjectId }, // 外键 topic
+    reply_id: { type: ObjectId }, // 外键 reply
     has_read: { type: Boolean, default: false },
     create_at: { type: Date, default: Date.now },
   });
