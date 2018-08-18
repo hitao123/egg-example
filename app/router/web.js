@@ -27,7 +27,7 @@ module.exports = app => {
     router.post('/signup', createUserLimit, sign.signup);
   } else {
     // 进行github验证
-    // router.redirect('/signup', '/passport/github');
+    router.redirect('/signup', '/passport/github');
   }
 
   const localStrategy = app.passport.authenticate('local', {
@@ -36,17 +36,17 @@ module.exports = app => {
   });
 
   router.get('/signin', sign.showLogin); // 进入登录页面
-  // router.post('/passport/local', localStrategy);
-  // router.all('/signout', sign.signout); // 登出
-  // router.get('/active_account', sign.activeAccount); // 帐号激活
+  router.post('/passport/local', localStrategy);
+  router.all('/signout', sign.signout); // 登出
+  router.get('/active_account', sign.activeAccount); // 帐号激活
 
-  // // github oauth
+  // github oauth
   app.passport.mount('github');
 
   router.get('/search_pass', sign.showSearchPass); // 找回密码页面
-  // router.post('/search_pass', sign.updateSearchPass); // 更新密码
-  // router.get('/reset_pass', sign.resetPass); // 进入重置密码页面
-  // router.post('/reset_pass', sign.updatePass); // 更新密码
+  router.post('/search_pass', sign.updateSearchPass); // 更新密码
+  router.get('/reset_pass', sign.resetPass); // 进入重置密码页面
+  router.post('/reset_pass', sign.updatePass); // 更新密码
 
   // user controller
   router.get('/user/:name', user.index); // 用户个人主页
