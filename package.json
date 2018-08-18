@@ -10,6 +10,7 @@
   "author": "huahaitao",
   "license": "ISC",
   "dependencies": {
+    "await-stream-ready": "^1.0.1",
     "bcryptjs": "^2.4.3",
     "egg": "^2.4.1",
     "egg-mongoose": "^3.0.0",
@@ -27,6 +28,7 @@
     "nodemailer": "^4.6.2",
     "nodemailer-smtp-transport": "^2.7.4",
     "qiniu": "^7.2.1",
+    "stream-wormhole": "^1.1.0",
     "uuid": "^3.2.1",
     "validator": "^10.5.0",
     "xmlbuilder": "^10.0.0"
