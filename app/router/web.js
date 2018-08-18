@@ -41,7 +41,7 @@ module.exports = app => {
   // router.get('/active_account', sign.activeAccount); // 帐号激活
 
   // // github oauth
-  // app.passport.mount('github');
+  app.passport.mount('github');
 
   router.get('/search_pass', sign.showSearchPass); // 找回密码页面
   // router.post('/search_pass', sign.updateSearchPass); // 更新密码
@@ -49,7 +49,7 @@ module.exports = app => {
   // router.post('/reset_pass', sign.updatePass); // 更新密码
 
   // user controller
-  // router.get('/user/:name', user.index); // 用户个人主页
+  router.get('/user/:name', user.index); // 用户个人主页
   // router.get('/setting', userRequired, user.showSetting); // 用户个人设置页
   // router.post('/setting', userRequired, user.setting); // 提交个人信息设置
   // router.get('/stars', user.listStars); // 显示所有达人列表页

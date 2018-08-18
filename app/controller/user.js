@@ -10,7 +10,7 @@ class UserController extends Controller {
     const { ctx, service, config } = this;
     const username = ctx.params.name;
     const user = await ctx.service.user.getUserByLoginName(username);
-    if (user) {
+    if (!user) {
       ctx.status = 404;
       ctx.message = '这个用户不存在';
       return;
@@ -53,7 +53,7 @@ class UserController extends Controller {
       recent_topics,
       recent_replies,
       token,
-      pageTitle: `@${user.loginname} 的个人主页`,
+      pageTitle: `${user.loginname} 的个人主页`,
     });
   }
 }

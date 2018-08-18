@@ -108,5 +108,7 @@ module.exports = appInfo => {
     },
   };
 
+  config.session_secret = 'test';
+
   return config;
 };
