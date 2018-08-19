@@ -110,5 +110,15 @@ module.exports = appInfo => {
 
   config.session_secret = 'test';
 
+  config.siteFile = {
+    '/favicon.ico': '/public/images/cnode_icon_32.png',
+  };
+
+  config.auth_cookie_name = 'egg_example';
+
+  config.admins = {
+    ADMIN_USER: true,
+  };
+
   return config;
 };

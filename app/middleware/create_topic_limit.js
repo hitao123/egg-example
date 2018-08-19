@@ -6,7 +6,7 @@ module.exports = (perDayPerUserLimitCount = 10) => {
 
   return async function createTopicLimit(ctx, next) {
     const { user, service } = ctx;
-    const YYYYMMDD = moment.format('YYYYMMDD');
+    const YYYYMMDD = moment().format('YYYYMMDD');
     const key = `topics_count_${user._id}_${YYYYMMDD}`;
 
     let todaysTopicsCount = (await service.cache.get(key)) || 0;

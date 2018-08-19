@@ -17,11 +17,13 @@ module.exports = () => {
     const { user } = ctx;
 
     if (!user) {
+      ctx.logger.debug('user', user, ctx);
       return await next();
     }
 
     // const count = await ctx.service.message.getMessagesCount(user._id);
     // user.messages_count = count;
+    ctx.logger.debug('user', user);
     ctx.locals.current_user = user;
     await next();
   };

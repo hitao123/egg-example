@@ -6,16 +6,28 @@ const uuid = require('uuid');
 const Controller = require('egg').Controller;
 
 class SignController extends Controller {
+
+  /**
+   * 登录页
+   */
+
   async showLogin() {
     const { ctx } = this;
     await ctx.render('/sign/signin', { pageTitle: '登录' });
   }
 
-  // sign up
+  /**
+   * 注册页
+   */
+
   async showSignup() {
     const { ctx } = this;
     await ctx.render('/sign/signup', { pageTitle: '注册' });
   }
+
+  /**
+   * 提交注册按钮
+   */
 
   async signup() {
     const { ctx, service, config } = this;
@@ -77,12 +89,20 @@ class SignController extends Controller {
     });
   }
 
+  /**
+   * 退出按钮
+   */
+
   async signout() {
     const { ctx } = this;
     ctx.session = null;
     ctx.logout();
     ctx.redirect('/');
   }
+
+  /**
+   * 激活账号
+   */
 
   async activeAccount() {
     const { ctx, service, config } = this;
@@ -111,9 +131,17 @@ class SignController extends Controller {
     await ctx.render('notify/notify', { success: '帐号已被激活，请登录' });
   }
 
+  /**
+   * 找回密码
+   */
+
   async showSearchPass() {
     await this.ctx.render('sign/search_pass');
   }
+
+  /**
+   * 更新密码
+   */
 
   async updateSearchPass() {
     const { ctx, service } = this;
@@ -150,6 +178,10 @@ class SignController extends Controller {
     });
   }
 
+  /**
+   * 重置密码
+   */
+
   async resetPass() {
     const { ctx, service } = this;
     const key = validator.trim(ctx.query.key || '');
@@ -175,6 +207,10 @@ class SignController extends Controller {
     }
     await this.ctx.render('sign/reset', { name, key });
   }
+
+  /**
+   * 更新密码
+   */
 
   async updatePass() {
     const { ctx, service } = this;
