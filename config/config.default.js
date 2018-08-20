@@ -120,5 +120,7 @@ module.exports = appInfo => {
     ADMIN_USER: true,
   };
 
+  config.default_page = 1;
+
   return config;
 };
