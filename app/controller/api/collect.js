@@ -93,7 +93,7 @@ class CollectController extends Controller {
     ctx.body = { success: true };
   }
 
-  async decollect() {
+  async de_collect() {
     const { ctx, service } = this;
     const topic_id = ctx.request.body.topic_id;
     const user_id = ctx.request.user.id;
