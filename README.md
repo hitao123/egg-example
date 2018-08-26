@@ -1,10 +1,20 @@
 # 学习 eggjs框架 开发nodejs项目
 
-## 后端结构分析
+## cnodejs
+
+> cnodejs 是一个提供中国 nodejs 爱好者分享一些nodejs相关知识，以及问答和招聘以及提供 api 供开发者调用学习的技术社区，
+站点需要提供的功能有注册、登录、发布话题、评论的功能的一个站点，[nodeclub](https://github.com/cnodejs/nodeclub)
+是最初版本使用 express 开发，后面使用 eggjs (koa) 重构 [egg-cnode](https://github.com/cnodejs/egg-cnode)项目
+现在使用，社区还有好多调用 api 开发 h5 版本的，[列表如下](https://github.com/search?q=cnode), 这里真的要感谢cnode
+社区提供这个api, 我学习 react 的时候，也是做这个小项目起步的，[react-cnode](https://github.com/hitao123/react-cnode)。
+
+## 后端数据结构分析
 
 > user topic 表是最重要的，reply topic_collect message 都是以前两张表相关的，每张表都有一个主键如 `"_id" : ObjectId("5b0ab2b091a9e80aa9177318")`
 
-### topic 表
+### 表结构
+
+topic 表
 
   | field | type | default | detail |
   | ------ | ------ |---| -- |
@@ -95,9 +105,100 @@ user 表
   | retrieve_key | String |  |  |
   | accessToken | String | | accesstoken |
 
-## 前端展示分析
+### 提供服务
+
+1. 根据上面的表结构，建立 mongodb 数据模型（需要了解 mongodb， mongoose）
+2. 后端需要提供类似 sql 查询的服务
+3. 登陆态的控制
+4. 路由控制
+
+## 前端设计分析
+
+- 使用 [egg](https://eggjs.org/zh-cn/intro/quickstart.html) 全局命令初始化项目, 生成下面的目录的结构
+
+```js
+egg-example
+├── package.json
+├── app.js (可选)
+├── app
+|   ├── router.js
+│   ├── controller
+│   |   └── home.js
+│   ├── service (可选)
+│   |   └── user.js
+│   ├── middleware (可选)
+│   |   └── response_time.js
+│   ├── public (可选)
+│   |   └── reset.css
+│   ├── view (可选)
+│   |   └── home.tpl
+│   └── extend (可选)
+│       ├── helper.js (可选)
+│       ├── request.js (可选)
+│       ├── response.js (可选)
+│       ├── context.js (可选)
+│       ├── application.js (可选)
+│       └── agent.js (可选)
+├── config
+|   ├── plugin.js
+|   ├── config.default.js
+│   ├── config.prod.js
+|   ├── config.test.js (可选)
+|   ├── config.local.js (可选)
+└── test
+    ├── middleware
+    |   └── response_time.test.js
+    └── controller
+        └── home.test.js
+```
+
+- 配置
+
+```js
+
+安装 egg-view-ejs egg-mongoose 这两个模块， 并在 config.default.js 做好基本配置
+
+'use strict';
+
+module.exports = appInfo => {
+  const config = {};
+  // key
+  config.keys = appInfo.name + '_1519887194138_3450';
+  // view
+  config.view = {
+    defaultViewEngine: 'ejs',
+    mapping: {
+      '.html': 'ejs', // 映射
+    },
+  };
+  config.ejs = {
+    layout: 'layout.html', // view layout.html 作为默认首页
+  };
+  // database
+  config.mongoose = {
+    url: process.env.EGG_MONGODB_URL || 'mongodb://127.0.0.1:27017/egg_example',
+    options: {
+      server: { poolSize: 20 },
+    },
+  };
+
+  return config;
+};
+
+- 静态资源存放
+
+app/public
+
+- 开发页面
+
+[根据指南](https://eggjs.org/zh-cn/core/view.html) 编写 controller 和 view
+
+```
 
 ## 需要考虑的问题
+
+1. 后端还需要设计路由，不同的路由进来，应该展示不同的内容，并且有权限控制（如未登陆不能发表评论和发帖）
+2. 提供给管理员一些权限，能删除一些帖子和屏蔽不合法用户
 
 ## 网站路由
 
